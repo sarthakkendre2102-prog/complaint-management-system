@@ -1,6 +1,3 @@
--- Run this script in MySQL to set up your database
--- mysql -u root -p < setup-db.sql
-
 CREATE DATABASE IF NOT EXISTS complaint_system;
 USE complaint_system;
 
@@ -25,6 +22,5 @@ CREATE TABLE IF NOT EXISTS complaints (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert a default admin user (password: admin123)
 INSERT IGNORE INTO users (fullname, email, phone, password, role)
 VALUES ('Admin', 'admin@admin.com', '0000000000', 'admin123', 'admin');
