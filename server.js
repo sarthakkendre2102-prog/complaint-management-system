@@ -23,8 +23,6 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
 app.use(
     session({
@@ -35,19 +33,9 @@ app.use(
     })
 );
 
-app.use((req, res, next) => {
-    res.locals.user = req.session.user || null;
-    next();
-});
-
 // Routes
 app.get("/", (req, res) => {
-    res.render("index", {
-        title: "Complaint Management System",
-        user: req.session.user || null,
-        success: null,
-        error: null
-    });
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.use("/", authRoutes);
@@ -55,12 +43,7 @@ app.use("/", complaintRoutes);
 
 // 404 fallback
 app.use((req, res) => {
-    res.status(404).render("index", {
-        title: "Page Not Found",
-        user: req.session.user || null,
-        success: null,
-        error: "Page not found."
-    });
+    res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
 });
 
 const PORT = process.env.PORT || 3000;

@@ -1,15 +1,15 @@
+const path = require("path");
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
+function wantsJson(req) {
+    return req.headers.accept?.includes("application/json");
+}
+
 // GET - Show login page
 router.get("/login", (req, res) => {
-    res.render("login", {
-        title: "Login",
-        user: req.session.user || null,
-        success: null,
-        error: null
-    });
+    res.sendFile(path.join(__dirname, "..", "public", "login.html"));
 });
 
 // POST - Handle login
@@ -20,57 +20,42 @@ router.post("/login", (req, res) => {
 
     db.query(sql, [email, password, role], (err, result) => {
         if (err) {
-            return res.render("login", {
-                title: "Login",
-                user: null,
-                success: null,
-                error: "Database error. Please try again."
-            });
+            if (wantsJson(req)) {
+                return res.status(500).json({ success: false, error: "Database error. Please try again." });
+            }
+            return res.redirect("/login");
         }
 
         if (result.length > 0) {
-            // Save user to session
             req.session.user = result[0];
-
-            // Redirect based on role
-            if (role === "admin") {
-                res.redirect("/dashboard/admin");
-            } else {
-                res.redirect("/dashboard/user");
+            const redirectUrl = role === "admin" ? "/dashboard/admin" : "/dashboard/user";
+            if (wantsJson(req)) {
+                return res.json({ success: true, redirect: redirectUrl });
             }
-        } else {
-            res.render("login", {
-                title: "Login",
-                user: null,
-                success: null,
-                error: "Invalid Credentials. Please try again."
-            });
+            return res.redirect(redirectUrl);
         }
+
+        if (wantsJson(req)) {
+            return res.status(401).json({ success: false, error: "Invalid Credentials. Please try again." });
+        }
+        return res.redirect("/login");
     });
 });
 
 // GET - Show registration page
 router.get("/register", (req, res) => {
-    res.render("register-user", {
-        title: "Register",
-        user: req.session.user || null,
-        success: null,
-        error: null
-    });
+    res.sendFile(path.join(__dirname, "..", "public", "register-user.html"));
 });
 
 // POST - Handle registration
 router.post("/register", (req, res) => {
     const { fullname, email, phone, password, confirm_password } = req.body;
 
-    // Check passwords match
     if (password !== confirm_password) {
-        return res.render("register-user", {
-            title: "Register",
-            user: null,
-            success: null,
-            error: "Passwords do not match."
-        });
+        if (wantsJson(req)) {
+            return res.status(400).json({ success: false, error: "Passwords do not match." });
+        }
+        return res.redirect("/register");
     }
 
     const sql = "INSERT INTO users (fullname, email, phone, password) VALUES (?,?,?,?)";
@@ -81,27 +66,30 @@ router.post("/register", (req, res) => {
             if (err.code === "ER_DUP_ENTRY") {
                 errorMsg = "Email already registered. Please login.";
             }
-            return res.render("register-user", {
-                title: "Register",
-                user: null,
-                success: null,
-                error: errorMsg
-            });
+            if (wantsJson(req)) {
+                return res.status(400).json({ success: false, error: errorMsg });
+            }
+            return res.redirect("/register");
         }
 
-        res.render("login", {
-            title: "Login",
-            user: null,
-            success: "Registration Successful! Please login.",
-            error: null
-        });
+        if (wantsJson(req)) {
+            return res.json({ success: true, redirect: "/login", message: "Registration Successful! Please login." });
+        }
+        return res.redirect("/login");
     });
 });
 
 // GET - Logout
 router.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("/");
+    req.session.destroy(() => {
+        res.clearCookie("connect.sid");
+        res.redirect("/");
+    });
+});
+
+// GET - Session info
+router.get("/api/session", (req, res) => {
+    res.json({ user: req.session.user || null });
 });
 
 module.exports = router;
