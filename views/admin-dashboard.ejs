@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+
+    <h2>Admin Dashboard</h2>
+    <h3>All Complaints</h3>
+
+    <% if (complaints.length === 0) { %>
+        <p>No complaints have been filed yet.</p>
+    <% } else { %>
+        <table border="1" id="adminTable">
+            <tr>
+                <th>Complaint ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Update Status</th>
+            </tr>
+            <% complaints.forEach(function(c) { %>
+                <tr>
+                    <td><%= c.complaint_id %></td>
+                    <td><%= c.title %></td>
+                    <td><%= c.category %></td>
+                    <td><%= c.user_email %></td>
+                    <td><span class="status-badge status-<%= c.status.toLowerCase().replace(' ', '-') %>"><%= c.status %></span></td>
+                    <td>
+                        <form action="/dashboard/admin/update" method="POST" style="display:inline;">
+                            <input type="hidden" name="complaint_id" value="<%= c.complaint_id %>">
+                            <select name="status">
+                                <option value="Pending" <%= c.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                <option value="In Progress" <%= c.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+                                <option value="Resolved" <%= c.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    <% } %>
+
+    <br>
+    <a href="/">Back to Home</a>
+
+<%- include('partials/footer') %>

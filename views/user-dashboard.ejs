@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+    <h2>User Dashboard</h2>
+    <h3>Welcome, <%= user.fullname %>! — Your Complaints</h3>
+
+    <% if (complaints.length === 0) { %>
+        <p>You have not filed any complaints yet.</p>
+        <a href="/complaint/new"><button>File a Complaint</button></a>
+    <% } else { %>
+        <table border="1" id="userTable">
+            <tr>
+                <th>Complaint ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+            </tr>
+            <% complaints.forEach(function(c) { %>
+                <tr>
+                    <td><%= c.complaint_id %></td>
+                    <td><%= c.title %></td>
+                    <td><%= c.category %></td>
+                    <td><span class="status-badge status-<%= c.status.toLowerCase().replace(' ', '-') %>"><%= c.status %></span></td>
+                </tr>
+            <% }); %>
+        </table>
+        <br>
+        <a href="/complaint/new"><button>File Another Complaint</button></a>
+    <% } %>
+
+    <br>
+    <a href="/">Back to Home</a>
+
+<%- include('partials/footer') %>

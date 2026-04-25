@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register Complaint</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
+<%- include('partials/header') %>
 
     <h2>Register Complaint</h2>
 
-    <form action="#" method="post">
+    <form action="/complaint/new" method="POST">
 
         <label>Complaint Title:</label><br>
         <input type="text" name="title" required><br><br>
@@ -34,8 +27,6 @@
     </form>
 
     <br>
-    <a href="index.html">Back to Home</a>
-    <script src="complaint_front.js"></script>
+    <a href="/">Back to Home</a>
 
-</body>
-</html>
+<%- include('partials/footer') %>

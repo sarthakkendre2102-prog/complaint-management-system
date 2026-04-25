@@ -1,0 +1,348 @@
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+header h1 {
+    margin-bottom: 15px;
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   LINKS & BUTTONS
+========================= */
+a {
+    text-decoration: none;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin-top: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* =========================
+   HEADINGS
+========================= */
+h2 {
+    margin: 25px 0;
+    color: #34495e;
+}
+
+h3 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+/* =========================
+   ALERTS (Success / Error)
+========================= */
+.alert {
+    width: 60%;
+    margin: 15px auto;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* =========================
+   GENERAL LIST STYLING
+========================= */
+ul {
+    width: 60%;
+    margin: 10px auto 25px auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+ul li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* =========================
+   FLEX CONTAINER (INDEX PAGE)
+========================= */
+.section-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    margin: 30px auto;
+    gap: 20px;
+}
+
+.left-section,
+.right-section {
+    width: 48%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.left-section ul,
+.right-section ul {
+    width: 100%;
+    margin: 10px 0;
+    box-shadow: none;
+    padding-left: 20px;
+}
+
+/* =========================
+   FORM STYLING
+========================= */
+form {
+    width: 40%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+form label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* File input special spacing */
+input[type="file"] {
+    border: none;
+}
+
+/* =========================
+   TABLE STYLING
+========================= */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+}
+
+table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    text-align: left;
+}
+
+table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Inline form in admin table */
+table td form {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    background: none;
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+}
+
+table td form select {
+    width: auto;
+    margin: 0;
+    padding: 5px;
+    font-size: 13px;
+}
+
+table td form button {
+    margin: 0;
+    padding: 5px 12px;
+    font-size: 13px;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-in-progress {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-resolved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* =========================
+   TRACK STATUS BOX
+========================= */
+.status-box {
+    width: 40%;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #eaf2f8;
+    border-left: 5px solid #3498db;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.status-box p {
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+    margin-top: auto;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: white;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 768px) {
+
+    .section-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-section,
+    .right-section {
+        width: 90%;
+    }
+
+    ul {
+        width: 90%;
+    }
+
+    form {
+        width: 90%;
+    }
+
+    .alert {
+        width: 90%;
+    }
+
+    .status-box {
+        width: 90%;
+    }
+
+    table {
+        width: 95%;
+        font-size: 13px;
+    }
+
+    header nav {
+        gap: 5px;
+    }
+
+    header nav button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
